@@ -26,3 +26,6 @@ def docs():
 @app.route("/contests")
 def contests():
     return CpHelper.get_contest_schedules()
+
+
+app.run()
