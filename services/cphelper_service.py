@@ -120,4 +120,3 @@ class CpHelper:
             return True, {"message": "success", "data": formatted_contest_details}
         except Exception as e:
             return False, {"message": str(e)}
-
