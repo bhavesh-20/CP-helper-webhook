@@ -12,7 +12,7 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 
 scheduler.add_job(
-    func=ContestTrigger.trigger, trigger="cron", hour="8", minute="0", day="*"
+    func=ContestTrigger.trigger, trigger="cron", hour="2", minute="30", day="*"
 )
 
 atexit.register(lambda: scheduler.shutdown())

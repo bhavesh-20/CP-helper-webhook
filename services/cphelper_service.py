@@ -27,7 +27,6 @@ class CpHelper:
             start_time = now + timedelta(hours=5)
             end_time = now + timedelta(days=1, hours=5)
             resource_names = [
-                "hackerearth.com",
                 "codechef.com",
                 "codeforces.com",
                 "codingcompetitions.withgoogle.com/kickstart",
