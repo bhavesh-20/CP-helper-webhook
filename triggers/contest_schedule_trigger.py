@@ -20,12 +20,11 @@ class ContestTrigger:
             }
             requests.post(cls.ERR_WEBHOOK_URL, data=data)
         else:
-            messages = resp.get("message")
-            for message in messages:
-                data = {
-                    "content": message,
-                }
-                requests.post(cls.CONTEST_WEBHOOK_URL, data=data)
+            message = resp.get("message")
+            data = {
+                "content": message,
+            }
+            requests.post(cls.CONTEST_WEBHOOK_URL, data=data)
         return None
 
     @classmethod
@@ -41,16 +40,15 @@ class ContestTrigger:
         if len(contest_details) == 0:
             return False, {"message": "No Contest data available for today."}
 
-        messages = []
+        reminder_message = [], "Hey @everyone, Daily Contest Reminder" + "\n"
 
         for contest in contest_details:
-            message = "Hey @everyone" + "\n"
-            message += (
-                f"There is a contest - {contest['event']}, {contest['starts_at']['type']} at {contest['starts_at']['value']}, hosted by {contest['host']}"
+            message = (
+                f"{contest['event']} starts {contest['starts_at']['type']} at {contest['starts_at']['value']}, hosted by {contest['host']}"
                 + "\n"
             )
             message += f"Duration - {contest['duration']}" + "\n"
-            message += f"Link - {contest['link']}"
-            messages.append(message)
+            message += f"Link - {contest['link']}" + "\n"
+            reminder_message += message
 
-        return True, {"message": messages}
+        return True, {"message": reminder_message}
