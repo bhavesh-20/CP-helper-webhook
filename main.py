@@ -7,15 +7,16 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
+@app.before_first_request
+def init_scheduler():
+    scheduler = BackgroundScheduler()
+    scheduler.start()
 
-scheduler = BackgroundScheduler()
-scheduler.start()
+    scheduler.add_job(
+        func=ContestTrigger.trigger, trigger="cron", hour="2", minute="30", day="*"
+    )
 
-scheduler.add_job(
-    func=ContestTrigger.trigger, trigger="cron", hour="2", minute="30", day="*"
-)
-
-atexit.register(lambda: scheduler.shutdown())
+    atexit.register(lambda: scheduler.shutdown())
 
 
 @app.route("/")
