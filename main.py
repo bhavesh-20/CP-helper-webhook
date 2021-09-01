@@ -28,4 +28,5 @@ def contests():
     return CpHelper.get_contest_schedules()
 
 
-app.run()
+if __name__ == "__main__":
+    app.run()
