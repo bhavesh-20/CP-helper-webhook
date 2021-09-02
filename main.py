@@ -1,4 +1,4 @@
-import atexit
+import atexit, os
 from flask import Flask
 from services.cphelper_service import CpHelper
 from triggers.contest_schedule_trigger import ContestTrigger
@@ -7,11 +7,11 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
-scheduler = BackgroundScheduler()
+scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
 scheduler.start()
 
 scheduler.add_job(
-    func=ContestTrigger.trigger, trigger="cron", hour="5", minute="30", day="*"
+    func=ContestTrigger.trigger, trigger="cron", hour="9", minute="0", day="*"
 )
 
 atexit.register(lambda: scheduler.shutdown())
@@ -28,4 +28,4 @@ def contests():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=False, use_reloader=False, port=os.environ.get("PORT",5000), host='0.0.0.0')
