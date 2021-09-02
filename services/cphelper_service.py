@@ -24,8 +24,8 @@ class CpHelper:
     ):
         try:
             now = datetime.utcnow()
-            start_time = now + timedelta(hours=5)
-            end_time = now + timedelta(days=1, hours=5)
+            start_time = now + timedelta(hours=3)
+            end_time = now + timedelta(days=1, hours=3)
             resource_names = [
                 "codechef.com",
                 "codeforces.com",
