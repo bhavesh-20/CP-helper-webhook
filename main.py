@@ -1,4 +1,4 @@
-import atexit
+import atexit, os
 from flask import Flask
 from services.cphelper_service import CpHelper
 from triggers.contest_schedule_trigger import ContestTrigger
@@ -28,4 +28,4 @@ def contests():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, use_reloader=False)
+    app.run(debug=False, use_reloader=False, port=os.environ.get("PORT",5000), host='0.0.0.0')
