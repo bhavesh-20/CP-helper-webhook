@@ -1,3 +1,4 @@
+import os
 from services.cphelper_service import CpHelper
 from flask_api import status
 
@@ -5,26 +6,24 @@ import requests
 
 
 class ContestTrigger:
-
-    ERR_WEBHOOK_URL = "https://discord.com/api/webhooks/882575945859498014/8h0dSCyKoQwHZuadGM4S7gW0E7YzKBusisWsxi4TOx3s6FXeAzZxO5DwBfncGOAWMydU"
-    CONTEST_WEBHOOK_URL = "https://discord.com/api/webhooks/882514149731622932/nPY-RUPjxzLqP9v3k8HrMBWK1j2-NTSHcRW4PcLHDiugbiZcP6Vm81EZ8ojbtExbIkqJ"
-
     @classmethod
     def trigger(
         cls,
     ):
+        ERR_WEBHOOK_URL = os.environ.get("ERR_WEBHOOK_URL")
+        CONTEST_WEBHOOK_URL = os.environ.get("CONTEST_WEBHOOK_URL")
         op_status, resp = cls.get_dicord_message()
         if not op_status:
             data = {
                 "content": resp["message"],
             }
-            requests.post(cls.ERR_WEBHOOK_URL, data=data)
+            requests.post(ERR_WEBHOOK_URL, data=data)
         else:
             message = resp.get("message")
             data = {
                 "content": message,
             }
-            requests.post(cls.CONTEST_WEBHOOK_URL, data=data)
+            requests.post(CONTEST_WEBHOOK_URL, data=data)
         return None
 
     @classmethod
