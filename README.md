@@ -34,7 +34,7 @@ Download the required dependencies using `pip install -r requirements.txt`
 This is it!, you are Done with the setup.
 
 More about the web server, There are two useful endpoints that you can use.
-- `/contests` this returns the contest data for the contests that are in an interval (now+3hrs), (now+27hrs)
+- `/contests` this returns the contest data for the contests that are in an interval (now+3hrs) to (now+27hrs)
 - `/trigger_notification` using this endpoint you can manually trigger notifications to discord.
 
 Now there is an apscheduler's BackgroundScheduler(cron job) running which takes care of sending notifications to discord in the given time. Basically
