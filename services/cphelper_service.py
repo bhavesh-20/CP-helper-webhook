@@ -1,3 +1,4 @@
+import os
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, time, timedelta
 from enum import Enum
@@ -7,13 +8,6 @@ from flask_api import status
 
 
 class CpHelper:
-
-    API_KEY = "3bca1c1a54cbdabbda22f365c159f9243155c398"
-    USERNAME = "darkangel007"
-    BASE_URL = (
-        f"https://clist.by:443/api/v1/contest/?api_key={API_KEY}&username={USERNAME}"
-    )
-
     class StartdateEnum(Enum):
         TODAY = 0
         TOMORROW = 1
@@ -59,7 +53,10 @@ class CpHelper:
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
         url_params = resp.get("data")
-        response = requests.get(cls.BASE_URL, params=url_params)
+        API_KEY = os.environ.get("API_KEY")
+        API_USERNAME = os.environ.get("API_USERNAME")
+        BASE_URL = f"https://clist.by:443/api/v1/contest/?api_key={API_KEY}&username={API_USERNAME}"
+        response = requests.get(BASE_URL, params=url_params)
         resp_data = response.json()
         contest_details = resp_data.get("objects")
         op_status, resp = cls._format_contest_details(contest_details)

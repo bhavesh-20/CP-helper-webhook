@@ -1,4 +1,5 @@
 import atexit, os
+from dotenv import load_dotenv
 from flask import Flask
 from services.cphelper_service import CpHelper
 from triggers.contest_schedule_trigger import ContestTrigger
@@ -27,5 +28,17 @@ def contests():
     return CpHelper.get_contest_schedules()
 
 
+@app.route("/trigger_notification")
+def trigger_notification():
+    ContestTrigger.trigger()
+    return "Notifications sent to Discord"
+
+
 if __name__ == "__main__":
-    app.run(debug=False, use_reloader=False, port=os.environ.get("PORT",5000), host='0.0.0.0')
+    load_dotenv()
+    app.run(
+        debug=False,
+        use_reloader=False,
+        port=os.environ.get("PORT", 5000),
+        host="0.0.0.0",
+    )
